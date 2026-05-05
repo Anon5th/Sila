@@ -1,0 +1,29 @@
+# Default: let Git auto-detect text vs binary, normalize text to LF in repo.
+* text=auto eol=lf
+
+# Shell launchers and scripts MUST be LF on Mac/Linux or they break.
+*.sh        text eol=lf
+*.command   text eol=lf
+
+# Windows batch files MUST be CRLF or cmd.exe complains.
+*.bat       text eol=crlf
+*.cmd       text eol=crlf
+
+# Source code: LF everywhere is fine (modern editors handle it).
+*.rs        text eol=lf
+*.ts        text eol=lf
+*.js        text eol=lf
+*.sol       text eol=lf
+*.html      text eol=lf
+*.css       text eol=lf
+*.md        text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.json      text eol=lf
+*.toml      text eol=lf
+
+# Binary
+*.png       binary
+*.jpg       binary
+*.gif       binary
+*.ico       binary

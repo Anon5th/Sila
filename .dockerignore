@@ -1,0 +1,27 @@
+# Root-level docker build context filter.
+# Each service Dockerfile sets its own WORKDIR and COPY, but if anyone runs
+# `docker build .` from the root we still want a sane context.
+
+.git
+.gitignore
+.dockerignore
+.env
+.env.local
+.DS_Store
+*.log
+
+# Build artifacts (heavy)
+**/node_modules
+**/target
+**/dist
+**/artifacts
+**/cache
+**/typechain-types
+
+# Local runtime state
+contract-out/
+
+# IDE / OS
+.vscode/
+.idea/
+Thumbs.db

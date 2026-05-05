@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sila Protocol — Temple Transparency Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="topbar">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span class="brand-text">SILA<em>·</em>PROTOCOL</span>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+        <button type="button" class="lang-btn" data-lang="th">TH</button>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <p class="kicker" data-i18n="kicker">Programmable Money for Buddhist Merit</p>
+      <h1 data-i18n="title">Every baht the temple spends, verified on-chain.</h1>
+      <p class="tagline" data-i18n="tagline">Sila Protocol is a smart-contract rule engine that <strong>allows</strong> spending that serves the temple — utilities, hospitals, food, schools — and <strong>blocks</strong> everything else, before the money moves.</p>
+
+      <div class="hero-stats">
+        <div class="stat stat-good">
+          <div class="stat-num" id="approvedNum">0</div>
+          <div class="stat-lbl"><span class="dot dot-good"></span><span data-i18n="statAllowed">approved on-chain</span></div>
+        </div>
+        <div class="stat-link">⛓</div>
+        <div class="stat stat-bad">
+          <div class="stat-num" id="blockedNum">0</div>
+          <div class="stat-lbl"><span class="dot dot-bad"></span><span data-i18n="statBlocked">blocked by the rule</span></div>
+        </div>
+      </div>
+
+      <p class="meta" id="meta">
+        <span class="engine-pill" id="enginePill">
+          <span class="pulse"></span>
+          <span data-i18n="engineLabel">Engine:</span>&nbsp;<span id="engineStatus">checking...</span>
+        </span>
+      </p>
+    </div>
+  </header>
+
+  <section class="feature-strip">
+    <div class="feature feature-good">
+      <div class="feature-icon" aria-hidden="true">✓</div>
+      <h3 data-i18n="featGoodTitle">Approved</h3>
+      <p data-i18n="featGoodBody">Utilities · Hospitals · Schools · Groceries · Charities</p>
+    </div>
+    <div class="feature feature-rule">
+      <div class="feature-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <h3 data-i18n="featRuleTitle">The Sila Rule</h3>
+      <p data-i18n="featRuleBody">An on-chain whitelist of merchant categories. The contract reverts before non-merit spending can settle.</p>
+    </div>
+    <div class="feature feature-bad">
+      <div class="feature-icon" aria-hidden="true">✕</div>
+      <h3 data-i18n="featBadTitle">Blocked</h3>
+      <p data-i18n="featBadBody">Jewelry · Gambling · Alcohol · Anything not on the whitelist</p>
+    </div>
+  </section>
+
+  <main class="grid">
+    <section class="panel panel-presets">
+      <h2 data-i18n="presetTitle">Try a transaction</h2>
+      <p class="muted" data-i18n="presetDesc">Each click runs through Mock Bank → Rust Integrity Engine → SilaIntegrityCore on a local EVM. Approved transactions get an on-chain tx hash; forbidden ones revert.</p>
+
+      <div class="preset-group">
+        <div class="group-heading group-good">
+          <span class="group-icon">✓</span>
+          <span data-i18n="groupGood">Useful for the temple</span>
+        </div>
+        <div class="presets" id="presetsGood"></div>
+      </div>
+
+      <div class="preset-group">
+        <div class="group-heading group-bad">
+          <span class="group-icon">✕</span>
+          <span data-i18n="groupBad">Forbidden by the rule</span>
+        </div>
+        <div class="presets" id="presetsBad"></div>
+      </div>
+
+      <details class="custom">
+        <summary data-i18n="customTitle">Or send a custom transaction</summary>
+        <div class="row">
+          <input id="customLabel" data-i18n-placeholder="customLabelPh" placeholder="Label" />
+          <input id="customMcc" type="number" data-i18n-placeholder="customMccPh" placeholder="MCC" />
+          <input id="customAmount" type="number" data-i18n-placeholder="customAmtPh" placeholder="Amount (THB)" />
+          <button id="customSend" data-i18n="sendBtn">Send</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="panel panel-receipt">
+      <h2 data-i18n="receiptTitle">Last receipt</h2>
+      <div id="lastReceipt" class="receipt empty">
+        <div class="receipt-icon">∅</div>
+        <div class="receipt-body" data-i18n="receiptEmpty">No transactions yet — click any button on the left.</div>
+      </div>
+      <div id="lastQr" class="qr"></div>
+    </section>
+
+    <section class="panel panel-history">
+      <h2 data-i18n="historyTitle">Live ledger</h2>
+      <p class="muted" data-i18n="historyDesc" data-i18n-html="1">Polled from <code>/api/history</code> every 2 seconds.</p>
+      <div class="table-wrap">
+        <table id="history">
+          <thead>
+            <tr>
+              <th data-i18n="thTime">Time</th>
+              <th data-i18n="thLabel">Label</th>
+              <th data-i18n="thMcc">MCC</th>
+              <th data-i18n="thCategory">Category</th>
+              <th data-i18n="thAmount">Amount</th>
+              <th data-i18n="thStatus">Status</th>
+              <th data-i18n="thDetail">Detail</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody">
+            <tr><td colspan="7" class="muted" data-i18n="historyWaiting">Waiting for first transaction...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p data-i18n="footer" data-i18n-html="1">POC for the 2026 e-Donation mandate. <strong>DEMO ONLY</strong> — no real funds, mock bank API, local Hardhat node.</p>
+    <p class="contract-line">contract <code id="contractAddr">—</code></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

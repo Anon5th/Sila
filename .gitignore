@@ -1,0 +1,17 @@
+node_modules/
+dist/
+target/
+.cache/
+.env
+.DS_Store
+
+# Hardhat
+contracts/artifacts/
+contracts/cache/
+contracts/typechain-types/
+
+# Rust
+engine/target/
+
+# Local contract output (generated at runtime in volume)
+contract-out/
