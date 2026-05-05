@@ -64,7 +64,7 @@ jobs:
           owner_lc="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
           echo "image=${{ env.REGISTRY }}/${owner_lc}/sila-${{ matrix.service }}" >> "$GITHUB_OUTPUT"
 
-      - name: Compute tags
+      - name: Compute tags + OCI labels
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -73,6 +73,14 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha,format=short
             type=ref,event=tag
+          # The org.opencontainers.image.source label is what links a GHCR
+          # package to its source repo. Without it, GHCR treats the package
+          # as a free-floating private object and won't inherit the repo's
+          # public visibility.
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.description=Sila Protocol — ${{ matrix.service }} (Temple Transparency POC)
+            org.opencontainers.image.licenses=MIT
 
       - name: Build and push
         uses: docker/build-push-action@v5
