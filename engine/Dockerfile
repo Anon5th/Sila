@@ -8,11 +8,16 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-COPY Cargo.toml ./
-RUN mkdir src && echo "fn main(){}" > src/main.rs && cargo build --release && rm -rf src target/release/sila-engine* target/release/deps/sila_engine*
+# Copy BOTH manifest and lockfile so the dep-prefetch layer respects the
+# pinned versions that work locally. Without Cargo.lock, cargo resolves
+# fresh on every CI build and may pick a newer transitive dep that breaks.
+COPY Cargo.toml Cargo.lock ./
+RUN mkdir src && echo "fn main(){}" > src/main.rs && \
+    cargo build --release --locked && \
+    rm -rf src target/release/sila-engine* target/release/deps/sila_engine*
 
 COPY src ./src
-RUN cargo build --release
+RUN cargo build --release --locked
 
 FROM debian:bookworm-slim AS runtime
 
