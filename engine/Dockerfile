@@ -1,4 +1,6 @@
-FROM rust:1.82-slim AS builder
+# Rust 1.86+ — alloy 0.8 + transitive deps (icu, zerovec) need
+# edition 2024 support, which only stabilised in 1.85.
+FROM rust:1.86-slim AS builder
 
 RUN apt-get update && apt-get install -y \
     pkg-config libssl-dev ca-certificates \
