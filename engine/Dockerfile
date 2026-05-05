@@ -1,6 +1,6 @@
-# Rust 1.86+ — alloy 0.8 + transitive deps (icu, zerovec) need
-# edition 2024 support, which only stabilised in 1.85.
-FROM rust:1.86-slim AS builder
+# Pin to 1.91 — matches the local toolchain and is required by
+# alloy's transitive dep ruint 1.18 (MSRV 1.90).
+FROM rust:1.91-slim AS builder
 
 RUN apt-get update && apt-get install -y \
     pkg-config libssl-dev ca-certificates \
