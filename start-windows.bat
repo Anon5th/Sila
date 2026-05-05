@@ -60,20 +60,34 @@ REM ---- 3. Move to script directory --------------------------------------
 cd /d "%~dp0"
 echo  [ok]  Working directory: %cd%
 
-REM ---- 4. Build + start the stack ---------------------------------------
+REM ---- 4. Pull images (fast path) or build locally (fallback) -----------
 echo.
-echo  [..]  Building and starting all services.
-echo        First run takes 5-10 minutes (downloading Rust + Hardhat dependencies).
-echo        Subsequent runs are fast.
-echo.
-
-docker compose up -d --build
+echo  [..]  Pulling pre-built images from GitHub Container Registry...
+docker compose pull >nul 2>&1
 if errorlevel 1 (
+    echo  [..]  Pull skipped/unavailable — building from source instead.
+    echo        First-run build takes 5-10 minutes ^(downloads Rust + Hardhat deps^).
     echo.
-    echo  [!] docker compose failed.
-    echo      Run this for diagnostics:   docker compose logs
-    pause
-    exit /b 3
+    docker compose up -d --build
+    if errorlevel 1 (
+        echo.
+        echo  [!] docker compose failed.
+        echo      For diagnostics:   docker compose logs
+        pause
+        exit /b 3
+    )
+) else (
+    echo  [ok]  Images pulled.
+    echo.
+    echo  [..]  Starting all services...
+    docker compose up -d --no-build
+    if errorlevel 1 (
+        echo.
+        echo  [!] docker compose failed.
+        echo      For diagnostics:   docker compose logs
+        pause
+        exit /b 3
+    )
 )
 
 REM ---- 5. Wait for the dashboard to be live -----------------------------

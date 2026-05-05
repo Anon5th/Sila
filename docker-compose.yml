@@ -1,8 +1,20 @@
+# Sila Protocol — Temple Transparency POC
+#
+# Reviewers:  `docker compose pull && docker compose up -d`
+#             (Pulls pre-built images from GHCR — no local build needed.)
+#
+# Developers: `docker compose up -d --build`
+#             (Builds from local source instead of pulling.)
+#
+# The `image:` references and `build:` contexts are both present, so either
+# path works. The launchers (start-windows.bat / start-mac.command /
+# start-linux.sh) try `pull` first and fall back to `--build` if pull fails.
+
 services:
   hardhat:
+    image: ghcr.io/anon5th/sila-contracts:latest
     build:
       context: ./contracts
-    image: sila-contracts:latest
     container_name: sila-hardhat
     command: ["npx", "hardhat", "node", "--hostname", "0.0.0.0"]
     ports:
@@ -17,7 +29,9 @@ services:
       retries: 30
 
   deployer:
-    image: sila-contracts:latest
+    image: ghcr.io/anon5th/sila-contracts:latest
+    build:
+      context: ./contracts
     container_name: sila-deployer
     depends_on:
       hardhat:
@@ -31,6 +45,7 @@ services:
     restart: "no"
 
   engine:
+    image: ghcr.io/anon5th/sila-engine:latest
     build:
       context: ./engine
     container_name: sila-engine
@@ -48,6 +63,7 @@ services:
       - contract-out:/contract-out:ro
 
   mock-bank:
+    image: ghcr.io/anon5th/sila-mock-bank:latest
     build:
       context: ./mock-bank
     container_name: sila-mock-bank

@@ -61,18 +61,30 @@ if ! docker info >/dev/null 2>&1; then
 fi
 ok "Docker daemon is running."
 
-# ---- 3. Build + start ------------------------------------------------------
+# ---- 3. Pull (fast path) or build (fallback) ------------------------------
 echo ""
-info "Building and starting all services."
-echo  "      First run takes 5–10 minutes (downloading Rust + Hardhat dependencies)."
-echo  "      Subsequent runs are fast."
-echo ""
+info "Pulling pre-built images from GitHub Container Registry..."
 
-if ! docker compose up -d --build; then
-  err "docker compose failed."
-  echo "      For diagnostics:   docker compose logs"
-  press_any_key "Press any key to exit..."
-  exit 3
+if docker compose pull >/dev/null 2>&1; then
+  ok "Images pulled."
+  echo ""
+  info "Starting all services..."
+  if ! docker compose up -d --no-build; then
+    err "docker compose failed."
+    echo "      For diagnostics:   docker compose logs"
+    press_any_key "Press any key to exit..."
+    exit 3
+  fi
+else
+  info "Pull skipped — building from source instead."
+  echo  "      First-run build takes 5–10 minutes (downloads Rust + Hardhat deps)."
+  echo ""
+  if ! docker compose up -d --build; then
+    err "docker compose failed."
+    echo "      For diagnostics:   docker compose logs"
+    press_any_key "Press any key to exit..."
+    exit 3
+  fi
 fi
 
 # ---- 4. Wait for dashboard -------------------------------------------------
