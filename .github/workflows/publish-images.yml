@@ -32,6 +32,21 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      # The Rust engine build is large; default GitHub runners only ship
+      # ~14 GB free disk, which Cargo + Buildx layers can exhaust. Reclaim
+      # ~30 GB by purging unused tools (Android, GHC, dotnet) before build.
+      - name: Free disk space (engine only)
+        if: matrix.service == 'engine'
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: false
+          swap-storage: false
+
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
 
