@@ -7,6 +7,8 @@
 
 🇹🇭 [อ่านเอกสารนี้เป็นภาษาไทย](./README.th.md)
 
+![Sila Protocol — bilingual dashboard demo (EN ↔ TH)](./docs/demo.gif)
+
 **👆 Click the badge above to launch the live demo in your browser — zero
 install, ~3 minutes from click to working dashboard.** No Docker, no Git, no
 toolchain on your machine. Free GitHub account is all you need.

@@ -152,6 +152,9 @@ const PRESETS_BAD = [
 ];
 
 let lang = (() => {
+  // ?lang=th override (used for headless screenshots, deep-links from social media, etc.)
+  const urlLang = new URLSearchParams(location.search).get("lang");
+  if (urlLang === "en" || urlLang === "th") return urlLang;
   const saved = localStorage.getItem("sila.lang");
   if (saved === "en" || saved === "th") return saved;
   return (navigator.language || "en").toLowerCase().startsWith("th") ? "th" : "en";
@@ -356,7 +359,8 @@ function renderCounters(snap) {
 function animateNum(id, from, to, snap) {
   const el = document.getElementById(id);
   if (!el) return;
-  if (snap || from === to) { el.textContent = String(to); return; }
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || snap || from === to) { el.textContent = String(to); return; }
   const start = performance.now();
   const dur = 600;
   function step(now) {
