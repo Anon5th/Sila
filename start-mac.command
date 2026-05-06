@@ -29,10 +29,22 @@ banner
 
 # ---- 1. Docker installed? --------------------------------------------------
 if ! command -v docker >/dev/null 2>&1; then
-  err "Docker is not installed."
-  echo "      This demo needs Docker Desktop."
-  echo "      Install from:  https://www.docker.com/products/docker-desktop/"
-  echo "      Then re-run this script."
+  err "Docker is not installed on this machine."
+  echo
+  echo "  You have two options:"
+  echo
+  echo "  ---------------------------------------------------------------"
+  echo "  EASIEST  -  Run the demo in your browser, no install needed:"
+  echo
+  echo "     https://codespaces.new/Anon5th/Sila?quickstart=1"
+  echo
+  echo "     (opens in your browser; needs only a free GitHub account)"
+  echo "  ---------------------------------------------------------------"
+  echo
+  echo "  OR install Docker Desktop locally:"
+  echo "     1. Download from  https://www.docker.com/products/docker-desktop/"
+  echo "     2. Install and restart your Mac"
+  echo "     3. Re-run this script"
   press_any_key "Press any key to exit..."
   exit 1
 fi

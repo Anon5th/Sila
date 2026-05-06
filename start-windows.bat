@@ -12,11 +12,22 @@ echo.
 REM ---- 1. Docker installed? ---------------------------------------------
 where docker >nul 2>&1
 if errorlevel 1 (
-    echo  [!] Docker is not installed.
+    echo  [!] Docker is not installed on this machine.
     echo.
-    echo      This demo needs Docker Desktop.
-    echo      Install it from:  https://www.docker.com/products/docker-desktop/
-    echo      Then re-run this script.
+    echo  You have two options:
+    echo.
+    echo  ---------------------------------------------------------------
+    echo  EASIEST  -  Run the demo in your browser, no install needed:
+    echo.
+    echo     https://codespaces.new/Anon5th/Sila?quickstart=1
+    echo.
+    echo     ^(opens in your browser; needs only a free GitHub account^)
+    echo  ---------------------------------------------------------------
+    echo.
+    echo  OR install Docker Desktop locally:
+    echo     1. Download from  https://www.docker.com/products/docker-desktop/
+    echo     2. Install and restart your computer
+    echo     3. Re-run this script
     echo.
     pause
     exit /b 1

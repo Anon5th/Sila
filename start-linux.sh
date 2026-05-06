@@ -39,11 +39,22 @@ banner
 
 # ---- 1. Docker installed? --------------------------------------------------
 if ! command -v docker >/dev/null 2>&1; then
-  err "Docker is not installed."
-  echo "      Install Docker + the compose plugin, e.g."
-  echo "        Ubuntu/Debian:  https://docs.docker.com/engine/install/"
-  echo "        Fedora:         sudo dnf install docker docker-compose-plugin"
-  echo "      Then re-run this script."
+  err "Docker is not installed on this machine."
+  echo
+  echo "  You have two options:"
+  echo
+  echo "  ---------------------------------------------------------------"
+  echo "  EASIEST  -  Run the demo in your browser, no install needed:"
+  echo
+  echo "     https://codespaces.new/Anon5th/Sila?quickstart=1"
+  echo
+  echo "     (opens in your browser; needs only a free GitHub account)"
+  echo "  ---------------------------------------------------------------"
+  echo
+  echo "  OR install Docker locally:"
+  echo "     Ubuntu/Debian:  https://docs.docker.com/engine/install/"
+  echo "     Fedora:         sudo dnf install docker docker-compose-plugin"
+  echo "     Then re-run this script."
   press_any_key "Press any key to exit..."
   exit 1
 fi
