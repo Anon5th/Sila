@@ -1,7 +1,13 @@
 # Sila Protocol — Temple Transparency POC
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Anon5th/Sila?quickstart=1)
+
 > Programmable money for Buddhist merit. A blockchain integrity layer for the
 > 2026 Thai e-Donation mandate.
+
+**👆 Click the badge above to launch the live demo in your browser — zero
+install, ~3 minutes from click to working dashboard.** No Docker, no Git, no
+toolchain on your machine. Free GitHub account is all you need.
 
 Sila Protocol is a proof-of-concept that demonstrates how donations to Thai
 temples can be transparently verified on-chain. Every expenditure flows through
@@ -16,8 +22,22 @@ This repo is fully Dockerized — a reviewer can clone it and run the demo with
 
 ## 🚀 One-Click Demo (For Reviewers)
 
-You only need **Docker Desktop** installed. Then double-click the launcher for
-your operating system:
+Three ways to run the demo. Pick whichever is easiest for you.
+
+### Easiest — Open in Codespaces (no install at all)
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Anon5th/Sila?quickstart=1)
+
+Click the badge above. GitHub will spin up a free cloud development
+environment in your browser, build the demo, and open the dashboard in a
+preview tab — **all you need is a free GitHub account and any browser**
+(Chrome, Edge, Safari, Firefox). Works equally well on Windows, macOS, Linux,
+even on a tablet.
+
+### Run locally on your computer (Windows / macOS / Linux)
+
+If you'd rather run on your own machine, install **Docker Desktop** first,
+then double-click the launcher for your operating system:
 
 | Platform                          | Action                                                                                                                     |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------|

@@ -1,0 +1,50 @@
+{
+  "name": "Sila Protocol — Temple Transparency POC",
+  "image": "mcr.microsoft.com/devcontainers/base:bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": true,
+      "dockerDashComposeVersion": "v2"
+    }
+  },
+
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb",
+    "storage": "16gb"
+  },
+
+  "forwardPorts": [3000, 8080, 8545],
+  "portsAttributes": {
+    "3000": {
+      "label": "Sila Dashboard",
+      "onAutoForward": "openPreview"
+    },
+    "8080": {
+      "label": "Integrity Engine",
+      "onAutoForward": "ignore"
+    },
+    "8545": {
+      "label": "Hardhat JSON-RPC",
+      "onAutoForward": "ignore"
+    }
+  },
+
+  "postCreateCommand": "docker compose pull && docker compose up -d",
+
+  "postAttachCommand": {
+    "wait-for-dashboard": "until curl -sf http://localhost:3000/api/health >/dev/null 2>&1; do sleep 2; done; echo; echo '==========================================='; echo '  Sila Protocol is running.'; echo '  Open the Sila Dashboard tab to start.'; echo '==========================================='; echo"
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "JuanBlanco.solidity",
+        "rust-lang.rust-analyzer",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+
+  "remoteUser": "vscode"
+}
