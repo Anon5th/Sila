@@ -5,6 +5,8 @@
 > Programmable money for Buddhist merit. A blockchain integrity layer for the
 > 2026 Thai e-Donation mandate.
 
+🇹🇭 [อ่านเอกสารนี้เป็นภาษาไทย](./README.th.md)
+
 **👆 Click the badge above to launch the live demo in your browser — zero
 install, ~3 minutes from click to working dashboard.** No Docker, no Git, no
 toolchain on your machine. Free GitHub account is all you need.
