@@ -9,6 +9,17 @@
 
 ![Sila Protocol — bilingual dashboard demo (EN ↔ TH)](./docs/demo.gif)
 
+### 📹 Demo video (Thai narration, 28 s)
+
+> *"When a monk tries to spend on non-merit goods, Sila Protocol stops the
+> transaction before the money moves. When the monk pays the temple's
+> electricity bill, Sila approves it on-chain — merit you can verify."*
+
+<video src="https://github.com/Anon5th/Sila/raw/main/docs/demo.mp4" controls muted playsinline width="100%"></video>
+
+If your browser doesn't render the inline player above:
+**[▶︎ Watch / download `demo.mp4`](./docs/demo.mp4?raw=1)** *(555 KB, H.264 1280×720)*
+
 **👆 Click the badge above to launch the live demo in your browser — zero
 install, ~3 minutes from click to working dashboard.** No Docker, no Git, no
 toolchain on your machine. Free GitHub account is all you need.

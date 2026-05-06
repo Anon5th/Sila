@@ -429,3 +429,32 @@ document.getElementById("customSend").onclick = () => {
 applyI18n();
 setInterval(refreshHistory, 2000);
 setInterval(refreshHealth, 5000);
+
+// ?demo=block | ?demo=approve — pre-populate the Last Receipt for headless screenshots.
+// Used to generate the static demo / video frames; harmless in normal use.
+(() => {
+  const demo = new URLSearchParams(location.search).get("demo");
+  if (!demo) return;
+  setTimeout(() => {
+    if (demo === "block") {
+      showReceipt({
+        status: "blocked",
+        label: I18N[lang].presets.rolex,
+        mcc: 5944,
+        amount: 850000,
+        reason: "SILA_PROTOCOL: NON_MERIT_EXPENDITURE_DETECTED",
+      });
+    } else if (demo === "approve") {
+      showReceipt({
+        status: "approved",
+        label: I18N[lang].presets.electricity,
+        mcc: 4900,
+        amount: 1200,
+        category: "Utilities",
+        reason: "Transaction aligns with merit principles",
+        tx_hash: "0x1e0487fc7a18d5f5bfc58d0116a28fae17cc3d831888ff7a36da26cae0bd6817",
+        block: 2,
+      });
+    }
+  }, 600);
+})();
